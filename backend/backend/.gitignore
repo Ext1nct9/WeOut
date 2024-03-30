@@ -1,0 +1,5 @@
+__pycache__/
+*.db
+*.pyc
+*.cpython-311.pyc
+*.log

@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # 👇 add your myapi app urls path here
     path('', include('myapi.urls')),
+    path('tinymce/', include('tinymce.urls')),
 ]

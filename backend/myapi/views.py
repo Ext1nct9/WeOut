@@ -2,10 +2,13 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import generics
+from .models import Event
+from .serializers import EventSerializer
 
 
-
-def main(request):
-    return HttpResponse('<h1>Hello World,</h1> <h2>from Django</h2>')
+class EventView(generics.ListCreateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
 
 

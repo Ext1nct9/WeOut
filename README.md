@@ -6,6 +6,7 @@
 **Frontend**
 - React
 - React router dom
+- Vite
 - Material UI
 - axios
 

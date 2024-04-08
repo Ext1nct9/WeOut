@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import {server_url} from './appsettings.json'
+import AppRouter from './AppRouter'
 
 function App() {
   const [data, setData] = useState([])
@@ -25,7 +26,7 @@ function App() {
   }, [])
   return (
     <>
-
+      <AppRouter/>
     </>
   )
 }

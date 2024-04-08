@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { server_url } from './appsettings.json';
+import {List, ListItem, ListItemText} from '@mui/material'
 
 type Event = {
     created_at: string;
@@ -15,11 +16,9 @@ type Event = {
 };
 
 const Event: React.FC = () => {
-    const [events, setEvents] = useState<Event[]>([]);
 
-    useEffect(() => {
-        fetchEvents();
-    }, []);
+    console.log('Rendering Event component...'); // Add console log here
+    const [events, setEvents] = useState<Event[]>([]);
 
     const fetchEvents = async () => {
         try {
@@ -31,18 +30,20 @@ const Event: React.FC = () => {
         }
     };
 
+    useEffect(() => {
+        fetchEvents();
+    }, []);
+
     return (
         <div>
-            {events.map((event) => (
-                <div key={event.id}>
-                    <h2>{event.title}</h2>
-                    <p>{event.description}</p>
-                    <p>{event.location}</p>
-                    <p>{event.manager}</p>
-                    <p>{event.date}</p>
-                    <p>{event.time}</p>
-                </div>
-            ))}
+            <h1>Events</h1>
+            <List>
+                {events.map((event) => (
+                    <ListItem key={event.id}>
+                        <ListItemText primary={`Title: ${event.title}`} secondary={`Description: ${event.description}`} />
+                    </ListItem>
+                ))}
+            </List>
         </div>
     );
 };

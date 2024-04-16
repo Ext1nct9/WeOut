@@ -16,10 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from myapi.views import CreateUserView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # 👇 add your myapi app urls path here
     path('', include('myapi.urls')),
     path('tinymce/', include('tinymce.urls')),
+    path("api/user/register/", CreateUserView.as_view(), name="register"),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api-auth/", include('rest_framework.urls')),
 ]

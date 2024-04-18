@@ -22,7 +22,7 @@ const Event: React.FC = () => {
 
     const fetchEvents = async () => {
         try {
-            const response = await fetch(`${server_url}/event`);
+            const response = await fetch(`${server_url}/api/event`);
             const data = await response.json();
             setEvents(data);
         } catch (error) {

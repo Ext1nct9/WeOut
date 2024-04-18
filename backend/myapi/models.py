@@ -9,8 +9,7 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 class Event(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200, null = False, default = "Event Title")
-    manager = models.CharField(max_length=200, null = False, default = "Event Manager")
-    manager = models.ForeignKey('Organizer', on_delete=models.CASCADE,  related_name='managed_events')
+    manager = models.ForeignKey('Organizer', on_delete=models.CASCADE,  related_name='managed_events', null = True, blank = True)
     description = HTMLField(null = True, blank = True, default = "Event Description")
     date = models.DateField(null = False)
     time = models.TimeField(null = True, blank = True)
@@ -31,7 +30,7 @@ class Event(models.Model):
 class Tag(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=200, null = False, default = "Tag Name")
-    events = models.ManyToManyField(Event, related_name= 'tags', blank=True)
+    events = models.ManyToManyField(Event, related_name= 'tags', blank=True, null = True)
 
     def __str__(self):
         return self.name

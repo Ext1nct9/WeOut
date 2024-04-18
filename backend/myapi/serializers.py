@@ -10,13 +10,13 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ['id','name']
 
 class EventSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True)
+    tags = TagSerializer(many=True, required=False)
     class Meta:
         model = Event
         fields = '__all__'
 
     def create(self, validated_data):
-        tags_data = validated_data.pop('tags')
+        tags_data = validated_data.pop('tags', [])
         event = Event.objects.create(**validated_data)
         for tag_data in tags_data:
             tag, created = Tag.objects.get_or_create(**tag_data)

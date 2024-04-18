@@ -22,7 +22,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 urlpatterns = [
     path('admin/', admin.site.urls),
     # 👇 add your myapi app urls path here
-    path('', include('myapi.urls')),
+    path('api/', include('myapi.urls')),
     path('tinymce/', include('tinymce.urls')),
     path("api/user/register/", CreateUserView.as_view(), name="register"),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),

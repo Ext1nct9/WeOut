@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { server_url } from './appsettings.json';
+import { server_url } from '../appsettings.json';
 import {List, ListItem, ListItemText} from '@mui/material'
 
 type Event = {

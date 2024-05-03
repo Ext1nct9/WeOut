@@ -17,11 +17,10 @@ Including another URLconf
 from django.urls import include, path
 from myapi.views import CreateUserView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from myapi.admin import organizerSite, adminSite
+from myapi.admin import adminSite
 
 urlpatterns = [
     path('admin/', adminSite.urls),
-    path('organizer/', organizerSite.urls),
     # 👇 add your myapi app urls path here
     path('api/', include('myapi.urls')),
     path('tinymce/', include('tinymce.urls')),

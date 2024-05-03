@@ -41,14 +41,4 @@ adminSite = AdminSite(name="adminSite")
 adminSite.register(User, UserAdmin)
 adminSite.register(Group)
 adminSite.register(Organizer, OrganizerAdmin)
-
-# Register your models here.
-class OrganizerArea(admin.AdminSite):
-    site_header = "Organizer Area"
-    site_title = "Organizer Portal"
-
-    def has_permission(self, request):
-        return request.user.is_active and request.user.is_staff
-
-organizerSite = OrganizerArea(name="OrganizerArea")
-organizerSite.register(Event)
+adminSite.register(Event)

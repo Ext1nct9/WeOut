@@ -10,7 +10,7 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 class Event(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200, null = False, default = "Event Title")
-    manager = models.ForeignKey('Organizer', on_delete=models.CASCADE,  related_name='managed_events', null = True, blank = True)
+    manager = models.CharField(max_length=200, null = False, default = "Event Manager")
     description = HTMLField(null = True, blank = True, default = "Event Description")
     date = models.DateField(null = False)
     time = models.TimeField(null = True, blank = True)
@@ -27,7 +27,6 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
-
 class Tag(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=200, null = False, default = "Tag Name")
@@ -35,6 +34,8 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
 
 class Organizer(AbstractUser):
     company = models.CharField(max_length=200, null = True, blank = True)
@@ -57,4 +58,4 @@ class Organizer(AbstractUser):
     
     def __str__(self):
         return self.username
-
+    

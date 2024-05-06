@@ -15,22 +15,19 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = '__all__'
 
+
+class CreateEventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ('title', 'description', 'date', 'time', 'location', 'visibility', 'tags')
+
     def create(self, validated_data):
-        tags_data = validated_data.pop('tags', [])
+        tags_data = validated_data.pop('tags')
         event = Event.objects.create(**validated_data)
         for tag_data in tags_data:
-            tag, created = Tag.objects.get_or_create(**tag_data)
+            tag, created = Tag.objects.get_or_create(name=tag_data['name'])
             event.tags.add(tag)
         return event
-
-    def update(self, instance, validated_data):
-        tags_data = validated_data.pop('tags')
-        instance.tags.set([])
-        for tag_data in tags_data:
-            tag, created = Tag.objects.get_or_create(**tag_data)
-            instance.tags.add(tag)
-        instance.save()
-        return instance
     
 
 class EventViewSet(viewsets.ModelViewSet):

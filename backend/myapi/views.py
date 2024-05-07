@@ -12,18 +12,17 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 from .models import Organizer
 
+
 class EventListView(generics.ListAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'description', 'location', 'tags__name']
 
-    
+
 class CreateEventView(APIView):
     serializer_class = CreateEventSerializer
     def post(self, request, *args, **kwargs):
-        if not self.request.session.exists(self.request.session.session_key):
-            self.request.session.create()
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             title = serializer.data.title
@@ -33,7 +32,7 @@ class CreateEventView(APIView):
             location = serializer.data.location
             visibility = serializer.data.visibility
             tags = serializer.data.tags
-            manager = self.request.session.session_key
+            manager = request.user
             event = Event(title=title, description=description, date=date, time=time, location=location, visibility=visibility, tags = tags, manager=manager)
             event.save()
             return Response(EventSerializer(event).data, status=status.HTTP_201_CREATED)

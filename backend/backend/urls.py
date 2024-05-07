@@ -20,7 +20,7 @@ from myapi.admin import adminSite
 urlpatterns = [
     path('admin/', adminSite.urls),
     # 👇 add your myapi app urls path here
-    path('api/', include('myapi.urls')),
+    path('', include('myapi.urls')),
     path('tinymce/', include('tinymce.urls')),
     path("api-auth/", include('rest_framework.urls')),
 ]

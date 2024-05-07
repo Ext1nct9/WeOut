@@ -31,9 +31,8 @@ class CreateEventView(APIView):
             time = serializer.data.time
             location = serializer.data.location
             visibility = serializer.data.visibility
-            tags = serializer.data.tags
             manager = request.user
-            event = Event(title=title, description=description, date=date, time=time, location=location, visibility=visibility, tags = tags, manager=manager)
+            event = Event(title=title, description=description, date=date, time=time, location=location, visibility=visibility, manager=manager)
             event.save()
             return Response(EventSerializer(event).data, status=status.HTTP_201_CREATED)
         return Response({"Bad Request": "Invalid data..."}, status=status.HTTP_400_BAD_REQUEST)

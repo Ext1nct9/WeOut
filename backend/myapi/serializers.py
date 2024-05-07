@@ -13,7 +13,7 @@ class EventSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, required=False)
     class Meta:
         model = Event
-        fields = '__all__'
+        fields = ['title', 'description', 'date', 'time', 'location', 'visibility', 'tags']
 
 
 class CreateEventSerializer(serializers.ModelSerializer):
@@ -29,14 +29,6 @@ class CreateEventSerializer(serializers.ModelSerializer):
             event.tags.add(tag)
         return event
     
-
-class EventViewSet(viewsets.ModelViewSet):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['tags__name']
-
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

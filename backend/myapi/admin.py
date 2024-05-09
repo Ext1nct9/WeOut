@@ -1,15 +1,17 @@
 from django.contrib import admin
-from django.contrib.auth.models import User, Group
-from .models import Event, Organizer
+from .models import Event, User, Group
 from django.contrib.auth.admin import UserAdmin
 
 
 class UserAdmin(UserAdmin):
-    list_display = UserAdmin.list_display + ('get_user_permissions',)
+    list_display = UserAdmin.list_display + ('get_user_type',)
 
-    def get_user_permissions(self, obj):
-        return ", ".join([p.codename for p in obj.user_permissions.all()])
-    get_user_permissions.short_description = 'User Permissions'
+    def get_user_type(self, obj):
+        if obj.groups.all().count() > 0:
+            return obj.groups.all()[0].name
+        else:
+            return "Admin"
+    get_user_type.short_description = 'User Type'
 
 
 class OrganizerAdmin(UserAdmin):
@@ -40,5 +42,4 @@ class AdminSite(admin.AdminSite):
 adminSite = AdminSite(name="adminSite")
 adminSite.register(User, UserAdmin)
 adminSite.register(Group)
-adminSite.register(Organizer, OrganizerAdmin)
 adminSite.register(Event)

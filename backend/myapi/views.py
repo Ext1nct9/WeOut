@@ -10,7 +10,6 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
-from .models import Organizer
 
 
 class EventListView(generics.ListAPIView):
@@ -76,7 +75,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            if isinstance(user, Organizer):
+            if isinstance(user, User) and user.groups.filter(name='Organizers').exists:
                 return redirect('organizer_dashboard')
             else:
                 return redirect('user_dashboard')
